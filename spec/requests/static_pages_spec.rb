@@ -11,7 +11,9 @@ describe "StaticPages" do
 	it { should have_selector('h1', text:  heading) }
 	it { should have_selector('title', text: full_title(page_title)) } 
 	it { should have_content (heading) } 
+  
   end
+  
   
   
   describe "Home page" do
@@ -42,5 +44,22 @@ describe "StaticPages" do
     let (:page_title) { heading }
 	it_should_behave_like "all static pages"
   end
-
+#  The book has this here, but is it testing completely - yes   Perhaps
+#  we can do something as a shared test
+    it "should have the right links on the header and footer" do 
+		visit root_path
+		click_link "About"
+		page.should have_selector 'title' , text: full_title("About Us")
+	    click_link "Help"
+		page.should have_selector 'title' , text: full_title("Help")
+	    click_link "Contact"
+		page.should have_selector 'title' , text: full_title("Contact")
+	    # back to root path for link testing home page
+	    click_link "Home"
+		page.should have_selector 'title' , text: full_title("")
+		click_link "Sign up now!"
+		page.should have_selector 'title' , text: full_title("Sign up")
+		click_link "sample app" 
+		page.should have_selector 'title' , text: full_title("")
+    end
 end
