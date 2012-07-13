@@ -14,9 +14,13 @@ class User < ActiveRecord::Base
     attr_accessible :name, :email, :password, :password_confirmation
 	
 	has_secure_password
-	
-	before_save { |user| user.email = email.downcase }
-  
+
+
+#    MH change to alternate form of downcasing as in exercise 6.2	
+#	before_save { |user| user.email = email.downcase }
+ 	before_save { self.email = email.downcase! }  #better!
+ 	
+ 	
    validates :name, presence: true , length: { maximum: 50 }
    # note that this regex validates as a string not a line 
    # \A.\z are start and end
