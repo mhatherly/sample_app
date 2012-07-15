@@ -24,6 +24,7 @@ describe User do
 	it { should respond_to(:password) }
 	it { should respond_to(:password_confirmation) }
 	it { should respond_to(:authenticate) }
+	
 	it { should be_valid }
 	
 	describe "when name is not present" do
@@ -33,6 +34,11 @@ describe User do
 	
 	describe "when email is not present" do
 		before { @user.email = " " }
+		it { should_not be_valid }
+	end
+	
+	describe "when email is nil" do
+		before { @user.email = nil}
 		it { should_not be_valid }
 	end
 	

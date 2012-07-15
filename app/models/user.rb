@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
 
 #    MH change to alternate form of downcasing as in exercise 6.2	
 #	before_save { |user| user.email = email.downcase }
- 	before_save { self.email = email.downcase! }  #better!
+ 	before_save { self.email.downcase! }  #better!
  	
  	
    validates :name, presence: true , length: { maximum: 50 }
