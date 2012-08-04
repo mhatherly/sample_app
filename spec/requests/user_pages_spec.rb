@@ -24,9 +24,37 @@ describe "User Pages" do
 	let(:submit) { "Create my account" }
 	
 	describe "with invalid information" do
-		it "should not create a user" do
+		it "should not create a user when all blanks" do
 			expect { click_button submit }.not_to change(User, :count)  
 		end
+		describe "after submission" do
+			before {click_button submit }
+			it { should have_selector('title', text: 'Sign up') }
+			it { should have_content('error') }
+			it { should have_content('Name can\'t be blank') }
+			it { should have_content('Email can\'t be blank') }
+			it { should have_content('Password can\'t be blank') }
+			it { should have_content('Password is too short') }
+			it { should have_content('Password confirmation can\'t be blank')}
+		end
+		describe "with unmatching passwords" do
+			before do
+				fill_in "Name",   		 with: "Example User"
+				fill_in "Email",   		 with: "user@example.com"
+				fill_in "Password",		 with: "foobar"
+				fill_in "Confirmation",  with: "barfoo"
+			end
+			
+			it "should not create a user " do
+				expect { click_button submit }.not_to change(User, :count)
+			end
+			describe "should give error" do
+				before {click_button submit} 
+				it { should have_content('Password doesn\'t match confirmation' )}
+			end  
+		end
+		
+		
 	end
 	
 	describe "with valid information" do
