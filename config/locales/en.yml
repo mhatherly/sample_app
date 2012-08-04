@@ -1,5 +1,11 @@
 # Sample localization file for English. Add more files in this directory for other locales.
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
+
+# hack to "tranlate password_digest to password in error messages exercise 7.6.3
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes:
+      user:
+        password_digest: "Password"
+        
