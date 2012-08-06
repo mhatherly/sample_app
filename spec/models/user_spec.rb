@@ -8,6 +8,7 @@
 #  created_at      :datetime        not null
 #  updated_at      :datetime        not null
 #  password_digest :string(255)
+#  remember_token  :string(255)
 #
 
 require 'spec_helper'
@@ -23,6 +24,7 @@ describe User do
 	it { should respond_to(:password_digest) }
 	it { should respond_to(:password) }
 	it { should respond_to(:password_confirmation) }
+	it { should respond_to(:remember_token) }
 	it { should respond_to(:authenticate) }
 	
 	it { should be_valid }
@@ -128,5 +130,9 @@ describe User do
     describe "with a password that is too short" do
 		before { @user.password = @user.password_confirmation = "a"*5 }
         it {should be_invalid}
+    end
+    describe "remember token" do
+       before { @user.save } 
+       its(:remember_token) { should_not be_blank }
     end
 end
