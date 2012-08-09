@@ -9,11 +9,4 @@ def valid_signin(user)
 	click_button "Sign in"
 end
 
-# Some other sources says that custom RSPEC matchers s/b in their own subdir
-# withing the support directory, but we will include it here per Hartl
 
-Rspec::Matchers.define :have_error_message do |message|
-	match do |page|
-	  page.should have_selector('div.alert.alert-error', text: message)
-	end
-end
