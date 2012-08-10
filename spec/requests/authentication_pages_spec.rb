@@ -20,7 +20,8 @@ describe "Authentication" do
         it { should have_error_message('Invalid') }
         describe "after visiting another home page" do
             before { click_link "Home" }
-            it { should_not have_error_message('Invalid') }
+                it { should have_no_error_message }
+
         end
     end
     
