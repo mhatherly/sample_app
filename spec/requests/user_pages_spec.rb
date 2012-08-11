@@ -31,11 +31,12 @@ describe "User Pages" do
 			before {click_button submit }
 			it { should have_selector('title', text: 'Sign up') }
 			it { should have_content('error') }
-			it { should have_content('Name can\'t be blank') }
-			it { should have_content('Email can\'t be blank') }
-			it { should have_content('Password can\'t be blank') }
-			it { should have_content('Password is too short') }
-			it { should have_content('Password confirmation can\'t be blank')}
+			it { should have_error_message("Name can't be blank") }
+			it { should have_error_message("Email can't be blank") }
+			it { should have_error_message('Email is invalid') }
+			it { should have_error_message("Password can't be blank") }
+			it { should have_error_message('Password is too short') }
+			it { should have_error_message("Password confirmation can't be blank")}
 		end
 		describe "with unmatching passwords" do
 			before do
@@ -50,7 +51,7 @@ describe "User Pages" do
 			end
 			describe "should give error" do
 				before {click_button submit} 
-				it { should have_content('Password doesn\'t match confirmation' )}
+				it { should have_error_message("Password doesn\'t match confirmation" )}
 			end  
 		end
 		
@@ -77,7 +78,7 @@ describe "User Pages" do
 			
 			describe "followed by signout"  do
 				before { click_link "Sign out" }
-			it { should have_link('Sign in') }
+				it { should have_link('Sign in') }
 			end
 		end
 		
