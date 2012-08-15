@@ -1,6 +1,6 @@
 
 class UsersController < ApplicationController
-  before_filter :signed_in_user, only: [:edit, :update]
+  before_filter :signed_in_user, only: [:index, :edit, :update]
   before_filter :correct_user, only: [:edit, :update]
   def show
 	@user = User.find(params[:id])
@@ -20,7 +20,10 @@ class UsersController < ApplicationController
 		render 'new'
 	end
   end 
-
+  
+  def index
+  end
+  
   def edit
   end
   
@@ -45,8 +48,6 @@ class UsersController < ApplicationController
   
   def correct_user
     @user=User.find(params[:id]) 
-    puts "MWH redirecting to root path :" unless current_user?(@user)
-    puts root_path unless current_user?(@user)
     redirect_to(root_path) unless current_user?(@user)
    end
 

@@ -71,6 +71,13 @@ describe "Authentication" do
           before { put user_path(user) }
           specify { response.should redirect_to(signin_path) }
         end # submitting to update action
+       
+        describe "visiting the user index" do 
+          before { visit users_path }
+          it { should have_selector('title', text: 'Sign in') }
+         end
+       
+       
         		
       end # in the users controller
 	end # non-signed in user
