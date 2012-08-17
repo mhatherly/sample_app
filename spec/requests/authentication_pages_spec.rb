@@ -98,6 +98,17 @@ describe "Authentication" do
         specify { response.should redirect_to(root_path) }  # goes to signon
       end # PUT request
     end #as wrong user
-  
+    describe "as non-admin user" do
+      let(:user) { FactoryGirl.create(:user) }
+      let(:non_admin) { FactoryGirl.create(:user) }
+      
+      before { sign_in non_admin }
+      
+      describe "submitting a DELETE request to the Users#destroy action" do
+        before { delete user_path(user) }
+        specify { response.should redirect_to(root_path) } 
+        
+      end  # subm DELETE
+    end # non admin user
   end # authorization
 end # authentication
