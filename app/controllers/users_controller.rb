@@ -1,6 +1,7 @@
 
 class UsersController < ApplicationController
   before_filter :signed_in_user, only: [:index, :edit, :update]
+  before_filter :signed_out_user, only: [:new, :create]
   before_filter :correct_user, only: [:edit, :update]
   before_filter :admin_user,   only: :destroy
   def show
@@ -53,7 +54,13 @@ class UsersController < ApplicationController
 		redirect_to signin_path, notice: "Please sign in." 
      end
   end
-  
+   def signed_out_user
+     if signed_in?
+		redirect_to root_path, 
+			notice: 
+		     "Please sign out if you want to add a new user" 
+     end
+  end
   def correct_user
     @user=User.find(params[:id]) 
     redirect_to(root_path) unless current_user?(@user)

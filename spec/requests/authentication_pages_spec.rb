@@ -79,6 +79,18 @@ describe "Authentication" do
           before { visit users_path }
           it { should have_selector('title', text: 'Sign in') }
          end
+
+        describe "attempting to visit the signup page when signed in" do
+         before do 
+            sign_in user
+            visit signup_path
+         end 
+         it { should have_selector('h1', text: 'Sample App') } # home page
+#			before { get signup_path }
+#            specify { response.should redirect_to(root_path) }  # 200
+  
+  
+        end # attempting to visit the signup pagen
        
        
         		
@@ -99,6 +111,7 @@ describe "Authentication" do
         specify { response.should redirect_to(root_path) }  # goes to signon
       end # PUT request
     end #as wrong user
+
     describe "as non-admin user" do
       let(:user) { FactoryGirl.create(:user) }
       let(:non_admin) { FactoryGirl.create(:user) }
