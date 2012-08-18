@@ -8,6 +8,9 @@ describe "Authentication" do
     
     it { should have_selector('h1', text: 'Sign in') }
     it { should have_selector('title', text: 'Sign in') }
+    it { should_not have_link('Profile')}
+    it { should_not have_link('Settings')}
+    it { should_not have_link('Sign out')}
   end
   
   describe "signin" do 
@@ -48,9 +51,7 @@ describe "Authentication" do
         
         before do
           visit edit_user_path(user)
-          fill_in "Email",       with: user.email
-          fill_in "Password",    with: user.password
-          click_button "Sign in"
+          sign_in user
         end # before
         
         describe "after signing in" do
