@@ -59,7 +59,17 @@ describe "Authentication" do
             it "should render the desired protected page " do
 				page.should have_selector('title', text: 'Edit user')
 			end # should render
-     
+			
+			describe "when signing in again" do
+			  before do
+			    visit signin_path
+			    sign_in user
+			  end
+			  
+			  it "should render the default (profile) page" do
+			    page.should have_selector('title', text: user.name)
+			  end
+			end # signing  in again
          end #after signing in
       end # attempting...
 
@@ -82,15 +92,27 @@ describe "Authentication" do
 
         describe "attempting to visit the signup page when signed in" do
          before do 
+            
+            
             sign_in user
             visit signup_path
          end 
          it { should have_selector('h1', text: 'Sample App') } # home page
-#			before { get signup_path }
-#            specify { response.should redirect_to(root_path) }  # 200
-  
-  
         end # attempting to visit the signup pagen
+
+        describe "attempting to delete yourself" do
+         let(:dumb_user) { FactoryGirl.create(:user, 
+					email: "dumb@example.com", admin: true) }
+		
+         before do 
+		  
+		  sign_in dumb_user
+          delete user_path(dumb_user)
+         end 
+         specify { response.should redirect_to(user_path) }
+	
+  
+        end # attempting to delete
        
        
         		
@@ -124,5 +146,6 @@ describe "Authentication" do
         
       end  # subm DELETE
     end # non admin user
+    
   end # authorization
 end # authentication
