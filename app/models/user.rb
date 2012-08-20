@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
 	
 	has_secure_password
 
+    has_many :microposts
 
 #    MH change to alternate form of downcasing as in exercise 6.2	
 #	before_save { |user| user.email = email.downcase }
