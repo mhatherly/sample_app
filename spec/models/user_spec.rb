@@ -161,7 +161,15 @@ describe User do
       it "should have the right microposts in the right order" do
         @user.microposts.should == [newer_micropost, older_micropost]
       end
-    end
+      
+      it "should destroy associated microposts" do
+        microposts = @user.microposts
+        @user.destroy
+        microposts.each do |micropost|
+          Micropost.find_by_id(micropost.id).should be_nil
+        end
+       end # should destroy
+    end # micropost associations
     
     describe "accessible attributes" do # ex 9.1
       it "should not allow access to admin" do
