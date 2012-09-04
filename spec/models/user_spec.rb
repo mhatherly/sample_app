@@ -29,7 +29,7 @@ describe User do
 	it { should respond_to(:admin) }
 	it { should respond_to(:authenticate) }
 	it { should respond_to(:microposts) }
-	
+	it { should respond_to(:feed) }
 	
 	
 	
@@ -169,6 +169,18 @@ describe User do
           Micropost.find_by_id(micropost.id).should be_nil
         end
        end # should destroy
+    
+    
+        describe "status:" do 
+          let(:unfollowed_post) do
+            FactoryGirl.create(:micropost, user:FactoryGirl.create(:user))
+          end
+
+          its(:feed) { should include(newer_micropost) }
+          its(:feed) { should include(older_micropost) }
+          its(:feed) { should_not include(unfollowed_post) }
+          
+        end #status
     end # micropost associations
     
     describe "accessible attributes" do # ex 9.1
@@ -181,6 +193,6 @@ describe User do
 							password_confirmation: "foobar",
 							admin: true )
         end.should raise_error(ActiveModel::MassAssignmentSecurity::Error)
-     end   
-   end
+     end   # no access to admin
+   end #accessable attributes
 end

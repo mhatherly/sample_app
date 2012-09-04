@@ -97,7 +97,7 @@ describe "Authentication" do
             sign_in user
             visit signup_path
          end 
-         it { should have_selector('h1', text: user.name) } # home page
+         it { should have_selector('h1', text: user.name) } # home page 
         end # attempting to visit the signup pagen
 
         describe "attempting to delete yourself" do
