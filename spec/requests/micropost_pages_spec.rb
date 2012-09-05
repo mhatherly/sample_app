@@ -27,7 +27,21 @@ describe "Micropost pages" do
     
       it "should create a micropost" do
         expect { click_button "Post" }.should change(Micropost, :count).by(1)
+      end 
+      describe "with a single post" do
+        before { click_button "Post" }
+      
+        it { should have_content "1 micropost" } # note singular
+        it { should_not have_content "1 microposts" }
       end  
+       describe "with multiple posts" do
+         before do
+           click_button "Post" 
+           fill_in 'micropost_content',  with: "dolor sictus" 
+           click_button "Post"
+        end
+           it { should have_content "2 microposts" } # 
+       end 
     end # with valid information 
   end #micropost creation 
   describe "Micropost destruction" do
