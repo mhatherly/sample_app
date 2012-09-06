@@ -40,7 +40,19 @@ describe "Micropost pages" do
            fill_in 'micropost_content',  with: "dolor sictus" 
            click_button "Post"
         end
-           it { should have_content "2 microposts" } # 
+           it { should have_content "2 microposts" } 
+           # this works but is not useful 
+           it { should have_xpath('/html/body/div/div[2]/aside/section/span[2]') }
+           #within(xpath: '/html/body/div/div[2]/aside/section/span[2]') do
+               #page.should have_content( "2 microposts" ) BAD
+           #end
+           #page.find(xpath: '/html/body/div/div[2]/aside/section/span[2]').
+            #should have_content("2 microposts")  # BAD No method
+            #it { find(xpath: '/html/body/div/div[2]/aside/section/span[2]').
+            #should have_content("2 microposts") } # cant convert nil to string
+            # added an id in the html so I can find this.
+            it { should have_selector("span",  id: "post-count", text: "2 microposts") }
+             it { should have_selector("#post-count", text: "2 microposts") }
        end 
     end # with valid information 
   end #micropost creation 
@@ -55,5 +67,26 @@ describe "Micropost pages" do
       end # should delete a micropost 
     end # as correct user    
   end # Micropost destruction
+  
+   describe "Micropost pagination" do
+    describe "with only a few posts" do
+        before  do
+            2.times { FactoryGirl.create(:micropost, user: user) }
+            visit root_path 
+        end
+         it { should_not  have_selector(".pagination") }
+    end # "with only a few posts" 
+     describe "with 50 posts" do
+        before  do
+            50.times { FactoryGirl.create(:micropost, user: user) } 
+            visit root_path 
+        end
+         # looking for the class = pagination
+         it { should have_selector(".pagination") }
+         
+    end # "with 50 posts" 
+      
+  end # Micropost pagination
+  
   
 end # Micropost pages
