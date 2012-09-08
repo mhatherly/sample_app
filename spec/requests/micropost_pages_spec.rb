@@ -83,10 +83,32 @@ describe "Micropost pages" do
         end
          # looking for the class = pagination
          it { should have_selector(".pagination") }
+       
          
     end # "with 50 posts" 
       
   end # Micropost pagination
   
   
-end # Micropost pages
+  describe "viewing another user's microposts"  do
+      let (:user2) { FactoryGirl.create(:user , 
+                    email: "otheruser@somewhere.org" ,
+                    name: "Other Guy")  }
+      before do 
+          #creates some posts for user2
+          FactoryGirl.create(:micropost, user: user2,
+                             content: 'Undeleteable - no delete tag')
+          FactoryGirl.create(:micropost, user: user2)
+                                               
+          
+          # navigate to that users profile page
+          visit user_path(user2) 
+      end
+      # validate that we are on that page
+      it { should have_content(user2.name) }   
+      # find those posts
+      it { should have_selector("li", text: "Undeleteable" ) }
+      # validate that there is no link to delete.
+      it { should_not have_link("delete") }
+  end  # viewing another users microposes
+end
