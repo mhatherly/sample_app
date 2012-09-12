@@ -1,6 +1,7 @@
 <% # shared by _micropost and _feed_item within a list item %>
 <% # takes in micropost or feed item as object called  post) %>
-<span class="content"><%= post.content %></span>
+<% # wrap is defined in app helpers  %>
+<span class="content"><%= wrap(post.content) %></span>
 <span class="timestamp" >
   Posted <%= time_ago_in_words(post.created_at) %> ago.
 </span>
