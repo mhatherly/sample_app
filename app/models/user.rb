@@ -19,9 +19,10 @@ class User < ActiveRecord::Base
 	has_secure_password
 
     has_many :microposts, dependent: :destroy
+    has_many :relationships, foreign_key: "follower_id", dependent: :destroy
+
 
 #    MH change to alternate form of downcasing as in exercise 6.2	
-#	before_save { |user| user.email = email.downcase }
  	before_save { self.email.downcase! }  #better!
  	before_save :create_remember_token
  	
