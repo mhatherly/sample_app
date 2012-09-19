@@ -89,6 +89,16 @@ describe "Authentication" do
           before { visit users_path }
           it { should have_selector('title', text: 'Sign in') }
          end
+         
+         describe "visiting the following page" do
+           before { visit following_user_path(user) }
+           it { should have_selector('title', text: 'Sign in') }
+         end
+         
+          describe "visiting the followers page" do
+           before { visit followers_user_path(user) }
+           it { should have_selector('title', text: 'Sign in') }
+         end
 
         describe "attempting to visit the signup page when signed in" do
          before do 
@@ -105,20 +115,16 @@ describe "Authentication" do
 					email: "dumb@example.com", admin: true) }
 		
          before do 
-		  
 		  sign_in dumb_user
           delete user_path(dumb_user)
          end 
+ 
          specify { response.should redirect_to(user_path) }
-	
-  
         end # attempting to delete
-       
-       
-        		
-      end # in the users controller
+ 
+       end # in the users controller
       
-      describe "in the Micrposts controller" do
+      describe "in the Microposts controller" do
         
         describe "submitting to the create action" do
           before { post microposts_path }
