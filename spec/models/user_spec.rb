@@ -230,5 +230,21 @@ describe User do
        it { should_not be_following(other_user) }
        its (:followed_users) { should_not include(other_user) }
      end
-   end
+     
+    describe "when followed user is deleted" do
+      before  { other_user.destroy }
+      describe "it should destroy associated relationships" do
+         it { should_not be_following(other_user) }
+         its (:followed_users) { should_not include(other_user) }
+        end 
+    end #when followed user is deleted
+     
+    describe "when following user is deleted" do
+      before  { @user.destroy }
+      describe "it should destroy associated relationships" do
+          subject {other_user}
+          its(:followers)  { should_not include(@user) }
+       end 
+     end #when followed user is deleted
+   end # following
 end
