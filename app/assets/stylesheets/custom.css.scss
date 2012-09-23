@@ -159,7 +159,26 @@ aside {
 	float: left;
 	margin-right: 10px;
 }
-
+.stats {
+  overflow: auto;
+  a {
+    float: left;
+    padding: 0 10px;
+    border-left: 1px solid $grayLighter;
+    color: gray;
+    &:first-child {
+      padding-left: 0;
+      border: 0;
+    }
+    &:hover {
+      text-decoration: none;
+      color: $blue;
+    }
+  }
+  strong {
+    display: block;
+  }
+}
 /* miscellaneous */
 .debug_dump {
 	clear: both;

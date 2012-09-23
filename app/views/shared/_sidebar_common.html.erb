@@ -1,0 +1,23 @@
+<!-- shared by : home, profile, and followers/following pages
+ call syntax render shared/_sidbar_common, 
+        user: current_user,  profile_link: :true) --> 
+<section> 
+   <a href="<%= user_path(user) %>">     
+    <%= gravatar_for user, size: 52 %>  
+   </a>
+   <h1>
+      <%= user.name %>
+   </h1>
+   <% if profile_link == :true  %>
+      <span><%= link_to "view my profile", user %></span>
+    <% end %>
+    <span id="post-count">
+      <%= pluralize(user.microposts.count, "micropost" ) %>
+    </span>
+</section>
+<section>
+    <%= render 'shared/stats' %>
+</section>    
+
+
+

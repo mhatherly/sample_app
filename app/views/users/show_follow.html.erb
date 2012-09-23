@@ -1,13 +1,9 @@
 <% provide(:title, @title)  %>
 <div class="row">
 	<aside class="span4">
+        <%=render 'shared/sidebar_common' , user: @user, profile_link: :true %>
 		<section>
-            <%= gravatar_for @user, size: 40 %>
-            <h1><%= @user.name %></h1>
-            <span><%= link_to "view my profile", @user %></span>
-            <span><b>Microposts:</b><%= @user.microposts.count %></span>
-     
-          <div class="user_avatars">
+         <div class="user_avatars">
             <% @users.each do |user| %>
               <%= link_to gravatar_for(user, size: 30), user %>
             <% end %>
